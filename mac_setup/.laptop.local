@@ -1,0 +1,64 @@
+#!/bin/sh
+
+# Installs
+## Productivity
+fancy_echo "Installing productivity software"
+brew bundle --file=- <<EOF
+cask "slack"
+cask "iterm2"
+cask "visual-studio-code"
+cask "obsidian"
+cask "spotify"
+cask "firefox"
+cask "whatsapp"
+cask "cheatsheet"
+cask "dropzone"
+cask "appcleaner"
+# mas "Jira Cloud by Atlassian", id: 1475897096
+# cask "keybase"
+cask "netron"
+cask "vlc"
+cask "the-unarchiver"
+cask "tunnelblick"
+cask "zoom"
+cask "discord"
+brew "sponge"  
+EOF
+
+
+## ohmyzsh
+if [ -d "$HOME/.oh-my-zsh" ]; then
+  echo "oh-my-zsh is installed"
+else
+  fancy_echo "Installing ohmyzsh"
+  cp "$HOME/.zshrc" "$HOME/Documents/.zshrc_backup" # Just in case this breaks something
+  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  if [ -r "$HOME/.zshrc.pre-oh-my-zsh"]; then
+    fancy_echo "Prepending existing config"
+    <<< cat "$HOME/.zshrc.pre-oh-my-zsh" < "$HOME/.zshrc" sponge "$HOME/.zshrc"
+  fi
+fi 
+
+## Dev
+fancy_echo "Installing dev languages and tools"
+brew bundle --file=- <<EOF
+brew "go"
+brew "pyenv"
+brew "pyenv-virtualenv"
+cask "jupyter-notebook-viewer"
+cask "docker"
+EOF
+
+# Configs
+fancy_echo "Setting up configs"
+## pyenv & pyenv-virtualenv
+append_to_zshrc '# Pyenv & Pyenv-virtualenv'
+append_to_zshrc 'eval "$(pyenv init --path)"'
+append_to_zshrc 'eval "$(pyenv init -)"'
+append_to_zshrc 'eval "$(pyenv virtualenv-init -)"'
+
+## Add the GOPATH variable to the path
+append_to_zshrc '# Go pathing'
+append_to_zshrc 'export PATH=$PATH:$(go env GOPATH)/bin'
+
+fancy_echo "Done!"
