@@ -4,25 +4,33 @@
 ## Productivity
 fancy_echo "Installing productivity software"
 brew bundle --file=- <<EOF
-cask "slack"
-cask "iterm2"
-cask "visual-studio-code"
-cask "obsidian"
-cask "spotify"
-cask "firefox"
-cask "whatsapp"
-cask "cheatsheet"
-cask "dropzone"
-cask "appcleaner"
-# mas "Jira Cloud by Atlassian", id: 1475897096
 # cask "keybase"
+# mas "Jira Cloud by Atlassian", id: 1475897096
+brew "sponge"
+cask "appcleaner"
+cask "cheatsheet"
+cask "discord"
+cask "dropzone"
+cask "firefox"
+cask "iterm2"
 cask "netron"
-cask "vlc"
+cask "obsidian"
+cask "slack"
+cask "spotify"
 cask "the-unarchiver"
 cask "tunnelblick"
+cask "visual-studio-code"
+cask "vlc"
+cask "whatsapp"
 cask "zoom"
-cask "discord"
-brew "sponge"  
+# Supercharge quicklook
+brew "qlmarkdown"
+brew "suspicious-package" # Inspect installer packages
+cask "apparency" # Inspect application bundles
+cask "qlcolorcode" # Code syntax highlighting
+cask "qlstephen" # view text files that don't end in .txt
+cask "qlvideo"
+cask "quicklook-json"
 EOF
 
 
@@ -60,5 +68,9 @@ append_to_zshrc 'eval "$(pyenv virtualenv-init -)"'
 ## Add the GOPATH variable to the path
 append_to_zshrc '# Go pathing'
 append_to_zshrc 'export PATH=$PATH:$(go env GOPATH)/bin'
+
+# Remove QL quarantine (This may not enable all of them)
+fancy_echo "Updating QuickLook quarantine restrictions"
+xattr -d -r com.apple.quarantine ~/Library/QuickLook
 
 fancy_echo "Done!"
