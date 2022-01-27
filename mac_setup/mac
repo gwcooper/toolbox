@@ -108,7 +108,7 @@ brew "redis", restart_service: :changed
 EOF
 
 
-if [ -f "$HOME/.laptop.local" ]; then
+if [ -f "$PWD/.laptop.local" ]; then
   fancy_echo "Running your customizations from $PWD/.laptop.local ..."
   # shellcheck disable=SC1090
   . "$PWD/.laptop.local"
