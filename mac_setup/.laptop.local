@@ -33,6 +33,9 @@ cask "qlvideo"
 cask "quicklook-json"
 EOF
 
+# Remove QL quarantine (This may not enable all of them)
+fancy_echo "Updating QuickLook quarantine restrictions"
+xattr -d -r com.apple.quarantine ~/Library/QuickLook
 
 ## ohmyzsh
 if [ -d "$HOME/.oh-my-zsh" ]; then
@@ -50,10 +53,17 @@ fi
 ## Dev
 fancy_echo "Installing dev languages and tools"
 brew bundle --file=- <<EOF
+# Go and related
 brew "go"
+# Python and related
 brew "pyenv"
 brew "pyenv-virtualenv"
 cask "jupyter-notebook-viewer"
+# Java / Scala
+tap  "adoptopenjdk/openjdk"
+cask "adoptopenjdk8"
+brew "sbt"
+# Everything else
 cask "docker"
 EOF
 
@@ -69,8 +79,6 @@ append_to_zshrc 'eval "$(pyenv virtualenv-init -)"'
 append_to_zshrc '# Go pathing'
 append_to_zshrc 'export PATH=$PATH:$(go env GOPATH)/bin'
 
-# Remove QL quarantine (This may not enable all of them)
-fancy_echo "Updating QuickLook quarantine restrictions"
-xattr -d -r com.apple.quarantine ~/Library/QuickLook
+
 
 fancy_echo "Done!"
