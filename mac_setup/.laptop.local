@@ -5,7 +5,6 @@
 fancy_echo "Installing productivity software"
 brew bundle --file=- <<EOF
 # cask "keybase"
-# mas "Jira Cloud by Atlassian", id: 1475897096
 brew "sponge"
 cask "appcleaner"
 cask "cheatsheet"
@@ -19,6 +18,7 @@ cask "slack"
 cask "spotify"
 cask "the-unarchiver"
 cask "tunnelblick"
+cask "todoist"
 cask "visual-studio-code"
 cask "vlc"
 cask "whatsapp"
@@ -78,7 +78,5 @@ append_to_zshrc 'eval "$(pyenv virtualenv-init -)"'
 ## Add the GOPATH variable to the path
 append_to_zshrc '# Go pathing'
 append_to_zshrc 'export PATH=$PATH:$(go env GOPATH)/bin'
-
-
 
 fancy_echo "Done!"
